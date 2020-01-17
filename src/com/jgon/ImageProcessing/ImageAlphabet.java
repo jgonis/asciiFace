@@ -10,6 +10,7 @@ import java.util.Optional;
 
 public class ImageAlphabet {
     private HashMap<String, BufferedImage> _imageAlphabet;
+    public final Integer CHARACTER_WIDTH;
     private List<String> _alphabet = Arrays.asList( "!",
             "\"",
             "#",
@@ -115,6 +116,7 @@ public class ImageAlphabet {
         Graphics2D g2d = scratchPad.createGraphics();
         g2d.setFont(retroFont);
         FontMetrics metrics = g2d.getFontMetrics(g2d.getFont());
+        CHARACTER_WIDTH = metrics.stringWidth(_alphabet.get(0));;
 
         for(String s : _alphabet) {
             int charHeight = metrics.getHeight();

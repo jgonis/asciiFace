@@ -20,6 +20,7 @@ public class MainPanel extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+
         // Draw Text
 	    if(_dragRect != null) {
 		    Graphics2D g2d = (Graphics2D) g;

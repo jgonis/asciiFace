@@ -3,15 +3,13 @@ package com.jgon.ImageProcessing;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Optional;
 
 public class ImageAlphabet {
-    private HashMap<String, BufferedImage> _imageAlphabet;
-    public final Integer CHARACTER_WIDTH;
-    private List<String> _alphabet = Arrays.asList( "!",
+    public static final HashMap<String, BufferedImage> Image_Alphabet;
+    public static final Integer CHARACTER_WIDTH;
+    private static final List<String> _alphabet = Arrays.asList( "!",
             "\"",
             "#",
             "$",
@@ -105,8 +103,8 @@ public class ImageAlphabet {
             "|",
             "}",
             "~");
-
-    public ImageAlphabet() {
+    
+    static {
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         Font[] allFonts = ge.getAllFonts();
         List<Font> fonts = Arrays.asList(allFonts);
@@ -117,6 +115,7 @@ public class ImageAlphabet {
         g2d.setFont(retroFont);
         FontMetrics metrics = g2d.getFontMetrics(g2d.getFont());
         CHARACTER_WIDTH = metrics.stringWidth(_alphabet.get(0));;
+        Image_Alphabet = new HashMap<>();
 
         for(String s : _alphabet) {
             int charHeight = metrics.getHeight();
@@ -128,7 +127,7 @@ public class ImageAlphabet {
             imageG2d.setColor(Color.WHITE);
             imageG2d.drawString(s, 0, strikePlate.getHeight());
             imageG2d.dispose();
-            _imageAlphabet.put(s,strikePlate);
+            Image_Alphabet.put(s,strikePlate);
         }
     }
 }

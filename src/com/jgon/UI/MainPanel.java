@@ -1,9 +1,11 @@
 package com.jgon.UI;
 
+import com.jgon.ImageProcessing.ImageAlphabet;
 import com.jgon.UI.Listeners.MainPanelMouseListener;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Random;
 
 public class MainPanel extends JPanel {
 	public static final Color DRAG_RECT_FILL_COLOR = new Color(100, 100, 200, 100);
@@ -20,7 +22,6 @@ public class MainPanel extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-
         // Draw Text
 	    if(_dragRect != null) {
 		    Graphics2D g2d = (Graphics2D) g;
@@ -35,11 +36,36 @@ public class MainPanel extends JPanel {
 				    this._dragRect.y,
 				    this._dragRect.width,
 				    this._dragRect.height);
+		    fillRectWithRandomText(g2d, _dragRect);
 	    }
     }
 
-	public void setDragRect(Rectangle _dragRect) {
-		this._dragRect = _dragRect;
+	private void fillRectWithRandomText(Graphics2D g2d, Rectangle rect) {
+    	int columns = rect.width / ImageAlphabet.CHARACTER_WIDTH;
+    	int rows = rect.height / ImageAlphabet.CHARACTER_HEIGHT;
+		Random rand = new Random();
+		g2d.setColor(Color.WHITE);
+		g2d.setFont(ImageAlphabet.RETRO_FONT);
+    	for(int row = 0; row < rows; row++) {
+    		for(int column = 0; column < columns; column++) {
+    			String s = ImageAlphabet.ALPHABET.get(rand.nextInt(ImageAlphabet.ALPHABET.size()));
+    			g2d.drawString(s,
+						rect.x + (column * ImageAlphabet.CHARACTER_WIDTH),
+						rect.y + (ImageAlphabet.CHARACTER_HEIGHT + (row * ImageAlphabet.CHARACTER_HEIGHT)));
+			}
+		}
+
+	}
+
+	public void setDragRect(int x, int y, int width, int height) {
+    	if(_dragRect == null) {
+    		_dragRect = new Rectangle();
+		}
+		this._dragRect.setBounds(x, y, width, height);
 		this.repaint();
+	}
+
+	public void resetDragRect() {
+    	this._dragRect = null;
 	}
 }

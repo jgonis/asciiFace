@@ -7,9 +7,12 @@ import java.util.*;
 import java.util.List;
 
 public class ImageAlphabet {
-    public static final HashMap<String, BufferedImage> Image_Alphabet;
+    public static final HashMap<String, BufferedImage> IMAGE_ALPHABET;
     public static final Integer CHARACTER_WIDTH;
-    private static final List<String> _alphabet = Arrays.asList( "!",
+    public static final Integer CHARACTER_HEIGHT;
+    public static final Font RETRO_FONT;
+    public static final List<String> ALPHABET = Arrays.asList( "!",
+            " ",
             "\"",
             "#",
             "$",
@@ -109,25 +112,24 @@ public class ImageAlphabet {
         Font[] allFonts = ge.getAllFonts();
         List<Font> fonts = Arrays.asList(allFonts);
         Optional<Font> retroFonts = fonts.stream().filter(font -> font.getName().equals("Px437 IBM VGA8")).findFirst();
-        Font retroFont = retroFonts.get().deriveFont(16f);
+        RETRO_FONT = retroFonts.get().deriveFont(16f);
         BufferedImage scratchPad = new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = scratchPad.createGraphics();
-        g2d.setFont(retroFont);
+        g2d.setFont(RETRO_FONT);
         FontMetrics metrics = g2d.getFontMetrics(g2d.getFont());
-        CHARACTER_WIDTH = metrics.stringWidth(_alphabet.get(0));;
-        Image_Alphabet = new HashMap<>();
+        CHARACTER_WIDTH = metrics.stringWidth(ALPHABET.get(0));
+        CHARACTER_HEIGHT = metrics.getHeight();
+        IMAGE_ALPHABET = new HashMap<>();
 
-        for(String s : _alphabet) {
-            int charHeight = metrics.getHeight();
-            int charWidth = metrics.stringWidth(s);
-            BufferedImage strikePlate = new BufferedImage(charWidth, charHeight, BufferedImage.TYPE_INT_ARGB);
+        for(String s : ALPHABET) {
+            BufferedImage strikePlate = new BufferedImage(CHARACTER_WIDTH, CHARACTER_HEIGHT, BufferedImage.TYPE_INT_ARGB);
             Graphics2D imageG2d = strikePlate.createGraphics();
             imageG2d.setColor(Color.BLACK);
             imageG2d.fillRect(0, 0, strikePlate.getWidth(), strikePlate.getHeight());
             imageG2d.setColor(Color.WHITE);
             imageG2d.drawString(s, 0, strikePlate.getHeight());
             imageG2d.dispose();
-            Image_Alphabet.put(s,strikePlate);
+            IMAGE_ALPHABET.put(s,strikePlate);
         }
     }
 }

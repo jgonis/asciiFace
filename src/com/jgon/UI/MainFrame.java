@@ -9,7 +9,6 @@ public class MainFrame extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.add(new MainPanel());
         this.pack();
-        this.setSize(800, 600);
     }
 
 

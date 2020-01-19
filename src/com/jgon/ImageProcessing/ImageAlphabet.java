@@ -7,7 +7,7 @@ import java.util.*;
 import java.util.List;
 
 public class ImageAlphabet {
-    public static final HashMap<String, BufferedImage> IMAGE_ALPHABET;
+    public static final ArrayList<BufferedImage> IMAGE_ALPHABET;
     public static final Integer CHARACTER_WIDTH;
     public static final Integer CHARACTER_HEIGHT;
     public static final Font RETRO_FONT;
@@ -119,7 +119,7 @@ public class ImageAlphabet {
         FontMetrics metrics = g2d.getFontMetrics(g2d.getFont());
         CHARACTER_WIDTH = metrics.stringWidth(ALPHABET.get(0));
         CHARACTER_HEIGHT = metrics.getHeight();
-        IMAGE_ALPHABET = new HashMap<>();
+        IMAGE_ALPHABET = new ArrayList<>();
 
         for(String s : ALPHABET) {
             BufferedImage strikePlate = new BufferedImage(CHARACTER_WIDTH, CHARACTER_HEIGHT, BufferedImage.TYPE_INT_ARGB);
@@ -129,7 +129,7 @@ public class ImageAlphabet {
             imageG2d.setColor(Color.WHITE);
             imageG2d.drawString(s, 0, strikePlate.getHeight());
             imageG2d.dispose();
-            IMAGE_ALPHABET.put(s,strikePlate);
+            IMAGE_ALPHABET.add(strikePlate);
         }
     }
 }
